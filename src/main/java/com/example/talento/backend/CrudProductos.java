@@ -1,6 +1,7 @@
 package com.example.talento.backend;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 public class CrudProductos extends CrudConsola<Producto> {
 
@@ -13,12 +14,20 @@ public class CrudProductos extends CrudConsola<Producto> {
     }
 
     @Override
-    public void crear() {
+    public void crear() throws NumberFormatException {
         System.out.println("=== Crear Nuevo Producto ===");
         System.out.println("1. Crear Artículo");
         System.out.println("2. Crear Servicio");
-        Integer opcion = leerEntero("Seleccione una opción: ");
 
+        Integer opcion;
+
+        // Manejo de entrada inválida
+        try {
+            opcion = leerEntero("Seleccione una opción: ");
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese un número.");
+            return;
+        }
         if (opcion == 1) {
             String nombre = leerTexto("Nombre: ");
             Double precio = leerDouble("Precio: ");
